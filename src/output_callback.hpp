@@ -42,7 +42,7 @@ public:
             os << "  {" << std::endl;
             for (int i = 0; i < keys.size(); i++)
             {
-                os << "    " << keys[i] << ": " << values[i] << std::endl;
+                os << "    " << keys[i] << ": " << values[i] << "," << std::endl;
             }
             os << "  }" << std::endl;
             os << "]" << std::endl;
