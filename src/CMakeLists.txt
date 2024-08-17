@@ -1,0 +1,17 @@
+add_library(
+    binance_api_parse
+    micro_sax_parser.cpp
+    output_callback.cpp
+)
+
+
+add_executable(
+    binance_api_example
+    main.cpp
+)
+
+target_link_libraries(
+    binance_api_example
+    binance_api_parse
+    curl
+)
