@@ -2,6 +2,7 @@ add_library(
     binance_api_parse
     mini_json_parser.cpp
     stream_event_handler.cpp
+    process_inputs.cpp
 )
 
 add_executable(

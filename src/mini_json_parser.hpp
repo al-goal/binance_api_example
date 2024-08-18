@@ -10,13 +10,13 @@ class MiniJsonParser
 {
 public:
 
-    MiniJsonParser(ParseEventHandler& callback);
+    MiniJsonParser(ParseEventHandler& event_handler);
 
     void parse_char(char c);
 
 private:
 
-    ParseEventHandler& callback;
+    ParseEventHandler& event_handler;
     std::string buffer;
 };
 

@@ -4,8 +4,8 @@
 namespace binance_api_example
 {
 
-MiniJsonParser::MiniJsonParser(ParseEventHandler& callback)
-:   callback(callback)
+MiniJsonParser::MiniJsonParser(ParseEventHandler& event_handler)
+:   event_handler(event_handler)
 {
 }
 
@@ -13,18 +13,18 @@ void MiniJsonParser::parse_char(char c)
 {
     if (c == '[')
     {
-        callback.start_array();
+        event_handler.start_array();
         buffer.clear(); 
     }
     else if (c == '{')
     {
-        callback.start_object();
+        event_handler.start_object();
         buffer.clear();
     }
     else if (c == '}')
     {
-        callback.value(buffer);
-        callback.end_object();
+        event_handler.value(buffer);
+        event_handler.end_object();
         buffer.clear();
     }
     else if (c == ']')
@@ -33,12 +33,12 @@ void MiniJsonParser::parse_char(char c)
     }
     else if (c == ':')
     {
-        callback.key(buffer);
+        event_handler.key(buffer);
         buffer.clear();
     }
     else if (c == ',')
     {
-        callback.value(buffer);
+        event_handler.value(buffer);
         buffer.clear();
     }
     else
