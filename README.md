@@ -2,6 +2,18 @@
 
 This application was created to fetch aggregated data from a Binance endpoint, split it into individual trades, and print these to the output.
 
+# How to build and run
+
+From the project root folder, run:
+
+```console
+foo@bar:~$ cmake -S . -B build
+foo@bar:~$ cmake --build build
+foo@bar:~$ ./build/src/binance_api_example <SYMBOL>
+```
+
+where <SYMBOL> is an actively traded symbol name. For testing, GUSDT was used.
+
 # Rationale - data parsing
 
 A straightforward solution to this problem would be in the form:
@@ -38,32 +50,30 @@ The ``process_url_to_stream()`` function takes an URL, an optional output stream
 
 CMake, libcurl, googletest
 
-# How to build and run
-
-From the project root folder, run:
-
-```console
-foo@bar:~$ cmake -S . -B build
-foo@bar:~$ cmake --build build
-foo@bar:~$ ./build/src/binance_api_example <SYMBOL>
-```
-
-where <SYMBOL> is an actively traded symbol name. For testing, GUSDT was used.
-
 # Requirements
 
 Review the API of Binance USD(S)-M Futures that can be found in (https://binance-docs.github.io/apidocs/futures/en/#change-log). Then
 - implement connectivity to the end-point GET /fapi/v1/aggTrades,
 - receive a stream of trades. Write a parsing algorithm to parse the incoming stream of trades and print each trade in the form:
 [
+
   {
+
     "a": 26129, // Aggregate tradeId
+
     "p": "0.01633102", // Price
+
     "q": "4.70443515", // Quantity
+
     "f": 27781, // First tradeId
+
     "l": 27781, // Last tradeId
+
     "T": 1498793709153, // Timestamp
+
     "m": true, // Was the buyer the maker?
+
   }
-].
+
+]
 - measure the speed at which singular trades are parsed and comment on the algorithmic complexity of your parsing algorithm.
