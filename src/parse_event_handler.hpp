@@ -1,12 +1,12 @@
-#ifndef PARSER_INTERFACE_HPP
-#define PARSER_INTERFACE_HPP
+#ifndef BINANCE_API_EXAMPLE_PARSE_EVENT_HANDLER_HPP
+#define BINANCE_API_EXAMPLE_PARSE_EVENT_HANDLER_HPP
 
 #include <string>
 
 namespace binance_api_example
 {
 
-class CallbackInterface
+class ParseEventHandler
 {
 public:
 
@@ -18,6 +18,6 @@ public:
     virtual void value(const std::string& value) {};
 };
 
-}
+} //namespace binance_api_example
 
-#endif // PARSER_INTERFACE_HPP
+#endif // BINANCE_API_EXAMPLE_PARSE_EVENT_HANDLER_HPP

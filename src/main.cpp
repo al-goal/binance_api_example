@@ -4,7 +4,7 @@
 #include <limits>
 #include <sstream>
 #include <vector>
-#include "output_callback.hpp"
+#include "stream_event_handler.hpp"
 #include "mini_json_parser.hpp"
 
 size_t writeFunction(void *ptr, size_t size, size_t nmemb, std::string* data) {
@@ -25,23 +25,13 @@ size_t write_function(void *ptr, size_t size, size_t nmemb, void* data) {
 
 int main(int argc, char* argv[])
 {
-    // std::string path = "/home/aln/binance_api_example/sample.txt";
-    // std::ifstream ifs(path.c_str(), std::ios::in | std::ios::binary);
-    // ifs.ignore( std::numeric_limits<std::streamsize>::max() );
-    // std::streamsize length = ifs.gcount();
-    // ifs.clear();   //  Since ignore will have set eof.
-    // ifs.seekg( 0, std::ios_base::beg );
-
-    binance_api_example::OutputCallback output_callback = binance_api_example::OutputCallback(std::cout);
-    output_callback.start_object();
+    binance_api_example::StreamEventHandler output_callback = binance_api_example::StreamEventHandler(std::cout);
     binance_api_example::MiniJsonParser parser(output_callback);
 
     auto curl = curl_easy_init();
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, "https://fapi.binance.com/fapi/v1/aggTrades?symbol=GUSDT");
-        std::string response_string;
-        std::string header_string;
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
         // curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunction);
         // curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_string);
@@ -61,20 +51,9 @@ int main(int argc, char* argv[])
 
         curl_easy_cleanup(curl);
         curl = NULL;
-
-        // std::cout << "Response code: " << response_code << std::endl;
-        // std::cout << "Elapsed time: " << elapsed << std::endl;
-        // std::cout << "Effective URL: " << url << std::endl; 
-        // // std::cout << "Response string: " << response_string << std::endl;
-        // std::cout << "Header string: " << header_string << std::endl;
-
-        std::istringstream iss(response_string);
-
-        // binance_api_example::OutputCallback callback(std::cout);
-        // binance_api_example::parse_stream(iss, response_string.size(), callback);
     }
 
-    // binance_api_example::OutputCallback callback(std::cout);
+    // binance_api_example::StreamEventHandler callback(std::cout);
     // binance_api_example::parse_stream(ifs, length, callback);
     // return 0;
 }

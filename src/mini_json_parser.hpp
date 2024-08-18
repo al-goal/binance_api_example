@@ -1,7 +1,7 @@
-#ifndef BINANCE_API_EXAMPLE_MICRO_SAX_PARSER_HPP
-#define BINANCE_API_EXAMPLE_MICRO_SAX_PARSER_HPP
+#ifndef BINANCE_API_EXAMPLE_MINI_JSON_PARSER_HPP
+#define BINANCE_API_EXAMPLE_MINI_JSON_PARSER_HPP
 
-#include "parser_interface.hpp"
+#include "parse_event_handler.hpp"
 
 namespace binance_api_example
 {
@@ -10,16 +10,16 @@ class MiniJsonParser
 {
 public:
 
-    MiniJsonParser(CallbackInterface& callback);
+    MiniJsonParser(ParseEventHandler& callback);
 
     void parse_char(char c);
 
 private:
 
-    CallbackInterface& callback;
+    ParseEventHandler& callback;
     std::string buffer;
 };
 
 } // namespace binance_api_example
 
-#endif // BINANCE_API_EXAMPLE_MICRO_SAX_PARSER_HPP
+#endif // BINANCE_API_EXAMPLE_MINI_JSON_PARSER_HPP
