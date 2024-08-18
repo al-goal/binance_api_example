@@ -1,4 +1,4 @@
-#include "micro_sax_parser.hpp"
+#include "mini_json_parser.hpp"
 #include <iostream>
 
 namespace binance_api_example
@@ -53,18 +53,13 @@ void parse_stream (std::istream& ifs, int length, CallbackInterface& callback)
     }
 }
 
-Parser::Parser(CallbackInterface& callback)
+MiniJsonParser::MiniJsonParser(CallbackInterface& callback)
 :   callback(callback)
 {
 }
 
-void Parser::parse_char(char c)
+void MiniJsonParser::parse_char(char c)
 {
-    buffer.append(1, c);
-
-    // std::cout << "buffer: " <<  buffer << std::endl;
-
-    // std::cout << "c: " << c << " " << buffer << std::endl; 
     if (c == '[')
     {
         callback.start_array();
@@ -77,7 +72,7 @@ void Parser::parse_char(char c)
     }
     else if (c == '}')
     {
-        buffer.erase(buffer.size() - 1);
+        // buffer.erase(buffer.size() - 1);
         callback.value(buffer);
         callback.end_object();
         buffer.clear();
@@ -88,18 +83,24 @@ void Parser::parse_char(char c)
     }
     else if (c == ':')
     {
-        buffer.erase(buffer.size() - 1);
+        // buffer.erase(buffer.size() - 1);
         callback.key(buffer);
         buffer.clear();
     }
     else if (c == ',')
     {
-        if (buffer.size() > 1)
-        {
-            buffer.erase(buffer.size() - 1);
-            callback.value(buffer);
-        }
+        // if (buffer.size() > 1)
+        // {
+        //     buffer.erase(buffer.size() - 1);
+        //     callback.value(buffer);
+        // }
+        callback.value(buffer);
         buffer.clear();
+    }
+    else
+    {
+        buffer.append(1, c);
+
     }
 }
 

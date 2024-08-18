@@ -1,6 +1,6 @@
 add_library(
     binance_api_parse
-    micro_sax_parser.cpp
+    mini_json_parser.cpp
     output_callback.cpp
 )
 

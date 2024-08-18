@@ -5,7 +5,7 @@
 #include <sstream>
 #include <vector>
 #include "output_callback.hpp"
-#include "micro_sax_parser.hpp"
+#include "mini_json_parser.hpp"
 
 size_t writeFunction(void *ptr, size_t size, size_t nmemb, std::string* data) {
     data->append((char*) ptr, size * nmemb);
@@ -13,7 +13,7 @@ size_t writeFunction(void *ptr, size_t size, size_t nmemb, std::string* data) {
 }
 
 size_t write_function(void *ptr, size_t size, size_t nmemb, void* data) {
-    binance_api_example::Parser *parser = (binance_api_example::Parser*) data;
+    binance_api_example::MiniJsonParser *parser = (binance_api_example::MiniJsonParser*) data;
 
     for (int i = 0; i < size * nmemb; i++)
     {
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     binance_api_example::OutputCallback output_callback = binance_api_example::OutputCallback(std::cout);
     output_callback.start_object();
-    binance_api_example::Parser parser(output_callback);
+    binance_api_example::MiniJsonParser parser(output_callback);
 
     auto curl = curl_easy_init();
     if (curl)
@@ -70,8 +70,8 @@ int main(int argc, char* argv[])
 
         std::istringstream iss(response_string);
 
-        binance_api_example::OutputCallback callback(std::cout);
-        binance_api_example::parse_stream(iss, response_string.size(), callback);
+        // binance_api_example::OutputCallback callback(std::cout);
+        // binance_api_example::parse_stream(iss, response_string.size(), callback);
     }
 
     // binance_api_example::OutputCallback callback(std::cout);
